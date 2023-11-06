@@ -29,12 +29,15 @@ class CsvWriter:
             {'name': 'cam rate x', 'format': 'f'},
             {'name': 'cam rate y', 'format': 'f'},
             {'name': 'cam rate z', 'format': 'f'},
+            {'name': 'cam acc x', 'format': 'f'},
+            {'name': 'cam acc y', 'format': 'f'},
+            {'name': 'cam acc z', 'format': 'f'},
             {'name': 'pitch error', 'format': 'f'},
             {'name': 'pitch p', 'format': 'f'},
             {'name': 'pitch i', 'format': 'f'},
             {'name': 'pitch d', 'format': 'f'},
             {'name': 'pitch ref', 'format': 'f'},
-            {'name': 'pitch svpwm', 'format': 'f'},
+            {'name': 'pitch svpwm', 'format': 'd'},
             {'name': 'roll error', 'format': 'f'},
             {'name': 'roll p', 'format': 'f'},
             {'name': 'roll i', 'format': 'f'},
@@ -55,26 +58,26 @@ class CsvWriter:
             {'name': 'reserved 5', 'format': 'B'},
             {'name': 'reserved 6', 'format': 'B'},
             {'name': 'reserved 7', 'format': 'B'},
-            {'name': 'dcm_euler 1', 'format': 'f'},
-            {'name': 'dcm_euler 2', 'format': 'f'},
-            {'name': 'dcm_euler 3', 'format': 'f'},
-            {'name': 'dcm11', 'format': 'f'},
-            {'name': 'dcm12', 'format': 'f'},
-            {'name': 'dcm13', 'format': 'f'},
-            {'name': 'dcm21', 'format': 'f'},
-            {'name': 'dcm22', 'format': 'f'},
-            {'name': 'dcm23', 'format': 'f'},
-            {'name': 'dcm31', 'format': 'f'},
-            {'name': 'dcm32', 'format': 'f'},
-            {'name': 'dcm33', 'format': 'f'},
+            {'name': 'dcmP', 'format': 'f'},
+            {'name': 'dcmR', 'format': 'f'},
+            {'name': 'dcmY', 'format': 'f'},
+            {'name': 'd11', 'format': 'f'},
+            {'name': 'd12', 'format': 'f'},
+            {'name': 'd13', 'format': 'f'},
+            {'name': 'd21', 'format': 'f'},
+            {'name': 'd22', 'format': 'f'},
+            {'name': 'd23', 'format': 'f'},
+            {'name': 'd31', 'format': 'f'},
+            {'name': 'd32', 'format': 'f'},
+            {'name': 'd33', 'format': 'f'},
             {'name': 'pitch Kp', 'format': 'f'},
             {'name': 'pitch Ki', 'format': 'f'},
             {'name': 'pitch Kd', 'format': 'f'},
             {'name': 'roll Kp', 'format': 'f'},
             {'name': 'roll Ki', 'format': 'f'},
             {'name': 'roll Kd', 'format': 'f'},
-            {'name': 'offset p', 'format': 'f'},
-            {'name': 'offset r', 'format': 'f'},
+            {'name': 'offset_p', 'format': 'f'},
+            {'name': 'offset_r', 'format': 'f'},
             {'name': 'command', 'format': 'f'},
         ]
         pass
@@ -154,6 +157,21 @@ class GimbalUartParser(CsvWriter):
             {'command': 'roll Kd', 'key': 0xa5, 'function': self.f_change_param},
             {'command': 'command', 'key': 0xa6, 'function': self.f_change_param},
             {'command': 'control', 'key': 0xa7, 'function': self.f_change_param},
+            {'command': 'offset_p', 'key': 0xa8, 'function': self.f_change_param},
+            {'command': 'offset_r', 'key': 0xa9, 'function': self.f_change_param},
+            {'command': 'dcm_type', 'key': 0xb0, 'function': self.f_change_param},
+            {'command': 'd11', 'key': 0xb1, 'function': self.f_change_param},
+            {'command': 'd12', 'key': 0xb2, 'function': self.f_change_param},
+            {'command': 'd13', 'key': 0xb3, 'function': self.f_change_param},
+            {'command': 'd21', 'key': 0xb4, 'function': self.f_change_param},
+            {'command': 'd22', 'key': 0xb5, 'function': self.f_change_param},
+            {'command': 'd23', 'key': 0xb6, 'function': self.f_change_param},
+            {'command': 'd31', 'key': 0xb7, 'function': self.f_change_param},
+            {'command': 'd32', 'key': 0xb8, 'function': self.f_change_param},
+            {'command': 'd33', 'key': 0xb9, 'function': self.f_change_param},
+            {'command': 'dcmP', 'key': 0xba, 'function': self.f_change_param},
+            {'command': 'dcmR', 'key': 0xbb, 'function': self.f_change_param},
+            {'command': 'dcmY', 'key': 0xbc, 'function': self.f_change_param},
             {'command': 'step pitch', 'key': 0xe0, 'function': self.f_change_param},
             {'command': 'step roll', 'key': 0xe1, 'function': self.f_change_param},
         ]
@@ -256,13 +274,13 @@ class GimbalUartParser(CsvWriter):
             msg = input("command: ")
 
             # Use regular expression to split the string into numbers and characters
-            output = re.findall(r'\d', msg)
-            split = []
-            if len(output) > 0:
-                pattern = r'(\D+)\s+(-?\d*\.?\d+)'
-                split = re.findall(pattern, msg)[0]
-            else:
-                split.append(msg)
+            # output = re.findall(r'\d', msg)
+            # split = []
+            # if len(output) > 0:
+            #     pattern = r'(\D+)\s+(-?\d*\.?\d+)'
+            #     split = re.findall(pattern, msg)[0]
+            # else:
+            #     split.append(msg)
 
             split = self.parse_input_command(msg)
 
@@ -377,8 +395,6 @@ class GimbalUartParser(CsvWriter):
                     self.ser.write(data)
 
 
-
-
     def run(self):
         self.search_com_ports()
         # uartRx = Thread(target=self.read_serial_and_udp_send)
@@ -415,10 +431,11 @@ class GimbalUI(GimbalUartParser):
         #keys below for display only
         self.flash_data_keys = [
             'pitch Kp', 'pitch Ki', 'pitch Kd', 'roll Kp', 'roll Ki', 'roll Kd',
-            'offset p', 'offset r', 'command'
+            'offset_p', 'offset_r', 'command'
         ]
         self.rt_data_keys = [
-            'time', 'pitch', 'roll', 'pitch error', 'pitch p', 'pitch i', 'pitch d', 'pitch svpwm']
+            'time', 'pitch', 'roll', 'cam acc x', 'cam acc y', 'cam acc z',
+            'pitch error', 'pitch p', 'pitch i', 'pitch d', 'pitch svpwm']
         self.sbgc_data_keys = ['sbgc count', 'sbgc euler 1', 'sbgc euler 2', 'sbgc euler 3']
         self.ui_command = ""
 
@@ -437,13 +454,36 @@ class GimbalUI(GimbalUartParser):
 
         msg = self.motor_mode_parse(win)
         win.addstr(y_pos, 0, "control   : " + msg)
-
-        self.dcm_mode_parse(win)
+        y_pos += 1
+        self.dcm_mode_parse(win, y_pos)
         win.refresh()
         pass
 
-    def dcm_mode_parse(self, win):
-        # key =
+    def dcm_mode_parse(self, win, y_pos):
+        key = 'dcm_type'
+        val = self.flash_data.get(key, 'N/A')
+
+        if val == 0:
+            dcm_keys = ['dcmP', 'dcmR', 'dcmY']
+            win.addstr(y_pos, 0, "dcm_type  : Euler(0)")
+            y_pos += 1
+            for key in dcm_keys:
+                val = self.flash_data.get(key, 'N/A')
+                win.addstr(y_pos, 0, "{}  : {:.8f}".format(key, val))
+                y_pos += 1
+
+        elif val == 1:
+            dcm_keys = ['d11', 'd12', 'd13', 'd21', 'd22', 'd23', 'd31', 'd32', 'd33']
+
+            win.addstr(y_pos, 0, "dcm_type  : Custom(1)")
+            y_pos += 1
+            for key in dcm_keys:
+                val = self.flash_data.get(key, 'N/A')
+                win.addstr(y_pos, 0, "{}  : {:.8f}".format(key, val))
+                y_pos += 1
+
+
+
         pass
 
     def motor_mode_parse(self, win):
@@ -551,10 +591,10 @@ class GimbalUI(GimbalUartParser):
 
 
     def ui_loop(self, stdscr):
-        param_win = curses.newwin(10, 22, 1, 1)
-        rt_data_win = curses.newwin(10, 25, 1, 23)
-        command_win = curses.newwin(2, 80, 20, 1)
-        sbgc_win = curses.newwin(10, 25, 1, 50)
+        param_win = curses.newwin(24, 30, 1, 1)
+        rt_data_win = curses.newwin(24, 25, 1, 31)
+        command_win = curses.newwin(2, 80, 25, 1)
+        sbgc_win = curses.newwin(10, 25, 1, 60)
         try:
             while True:
                 # self.ui_data = self.parse_bytearray(data_ui_queue.get_nowait())
