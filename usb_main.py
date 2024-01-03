@@ -22,38 +22,70 @@ class CsvWriter:
     def __init__(self):
         DATA_SIZE = 5
         self.data_structure = [
-            {'name': 'message type', 'format': 'B'},
-            {'name': 'time', 'format': 'f'},
-            {'name': 'pitch', 'format': 'f'},
-            {'name': 'roll', 'format': 'f'},
-            {'name': 'cam rate x', 'format': 'f'},
-            {'name': 'cam rate y', 'format': 'f'},
-            {'name': 'cam rate z', 'format': 'f'},
-            {'name': 'cam acc x', 'format': 'f'},
-            {'name': 'cam acc y', 'format': 'f'},
-            {'name': 'cam acc z', 'format': 'f'},
-            {'name': 'pitch error', 'format': 'f'},
-            {'name': 'pitch p', 'format': 'f'},
-            {'name': 'pitch i', 'format': 'f'},
-            {'name': 'pitch d', 'format': 'f'},
-            {'name': 'pitch ref', 'format': 'f'},
-            {'name': 'pitch svpwm', 'format': 'd'},
-            {'name': 'roll error', 'format': 'f'},
-            {'name': 'roll p', 'format': 'f'},
-            {'name': 'roll i', 'format': 'f'},
-            {'name': 'roll d', 'format': 'f'},
-            {'name': 'roll ref', 'format': 'f'},
-            {'name': 'roll svpwm', 'format': 'f'},
-            {'name': 'sbgc count', 'format': 'H'},
-            {'name': 'sbgc euler 1', 'format': 'f'},
-            {'name': 'sbgc euler 2', 'format': 'f'},
-            {'name': 'sbgc euler 3', 'format': 'f'},
+            {'name': 'message type', 'format': 'B', 'c_variable_name': 'g_log.message_type'},
+            {'name': 'time', 'format': 'f', 'c_variable_name': 'g_log_time'},
+            {'name': 'cam imu ready', 'format': 'B', 'c_variable_name': 'g_imu.camera.gyro_ready'},
+            {'name': 'cam bias error', 'format': 'f', 'c_variable_name': 'g_imu.camera.gyro_bias_error'},
+            {'name': 'cam imu err', 'format': 'f', 'c_variable_name': 'g_imu.camera.fusion_error'},
+            {'name': 'beta', 'format': 'f', 'c_variable_name': 'g_imu.camera.madgwick_beta'},
+            {'name': 'kf gy bias x', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_gy_bias[0]'},
+            {'name': 'kf gy bias y', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_gy_bias[1]'},
+            {'name': 'kf gy bias z', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_gy_bias[2]'},
+            {'name': 'kf bias Px', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[0]'},
+            {'name': 'kf bias Py', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[1]'},
+            {'name': 'kf bias Pz', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[2]'},
+            {'name': 'pitch', 'format': 'f', 'c_variable_name': 'g_imu.camera.euler[0]'},
+            {'name': 'roll', 'format': 'f', 'c_variable_name': 'g_imu.camera.euler[1]'},
+            {'name': 'cam rate x', 'format': 'f', 'c_variable_name': 'g_imu.camera.gy[0]'},
+            {'name': 'cam rate y', 'format': 'f', 'c_variable_name': 'g_imu.camera.gy[1]'},
+            {'name': 'cam rate z', 'format': 'f', 'c_variable_name': 'g_imu.camera.gy[2]'},
+            {'name': 'cam acc x', 'format': 'f', 'c_variable_name': 'g_imu.camera.acc[0]'},
+            {'name': 'cam acc y', 'format': 'f', 'c_variable_name': 'g_imu.camera.acc[1]'},
+            {'name': 'cam acc z', 'format': 'f', 'c_variable_name': 'g_imu.camera.acc[2]'},
+            {'name': 'b imu ready', 'format': 'B', 'c_variable_name': 'g_imu.board.gyro_ready'},
+            {'name': 'b bias error', 'format': 'f', 'c_variable_name': 'g_imu.board.gyro_bias_error'},
+            {'name': 'b imu err', 'format': 'f', 'c_variable_name': 'g_imu.board.fusion_error'},
+            {'name': 'b pitch', 'format': 'f', 'c_variable_name': 'g_imu.board.euler[0]'},
+            {'name': 'b roll', 'format': 'f', 'c_variable_name': 'g_imu.board.euler[1]'},
+            {'name': 'b acc x', 'format': 'f', 'c_variable_name': 'g_imu.board.acc[0]'},
+            {'name': 'b acc y', 'format': 'f', 'c_variable_name': 'g_imu.board.acc[1]'},
+            {'name': 'b acc z', 'format': 'f', 'c_variable_name': 'g_imu.board.acc[2]'},
+            {'name': 'b rate x', 'format': 'f', 'c_variable_name': 'g_imu.board.gy[0]'},
+            {'name': 'b rate y', 'format': 'f', 'c_variable_name': 'g_imu.board.gy[1]'},
+            {'name': 'b rate z', 'format': 'f', 'c_variable_name': 'g_imu.board.gy[2]'},
+            {'name': 'b beta', 'format': 'f', 'c_variable_name': 'g_imu.board.madgwick_beta'},
+            {'name': 'b gy bias x', 'format': 'f', 'c_variable_name': 'g_gy_bias_var[3].bias'},
+            {'name': 'b gy bias y', 'format': 'f', 'c_variable_name': 'g_gy_bias_var[4].bias'},
+            {'name': 'b gy bias z', 'format': 'f', 'c_variable_name': 'g_gy_bias_var[5].bias'},
+            {'name': 'b kf gy bias x', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_gy_bias[0]'},
+            {'name': 'b kf gy bias y', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_gy_bias[1]'},
+            {'name': 'b kf gy bias z', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_gy_bias[2]'},
+            {'name': 'b kf bias Px', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[0]'},
+            {'name': 'b kf bias Py', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[1]'},
+            {'name': 'b kf bias Pz', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[2]'},
+            {'name': 'pitch error', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].error'},
+            {'name': 'pitch p', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].pidterm[0]'},
+            {'name': 'pitch i', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].pidterm[1]'},
+            {'name': 'pitch d', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].pidterm[2]'},
+            {'name': 'pitch ref', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].ref'},
+            {'name': 'pitch svpwm', 'format': 'd', 'c_variable_name': 'drv_var[PITCH].svpwm_angle'},
+            {'name': 'roll error', 'format': 'f', 'c_variable_name': 'g_pid_var[ROLL].error'},
+            {'name': 'roll p', 'format': 'f', 'c_variable_name': 'g_pid_var[ROLL].pidterm[0]'},
+            {'name': 'roll i', 'format': 'f', 'c_variable_name': 'g_pid_var[ROLL].pidterm[1]'},
+            {'name': 'roll d', 'format': 'f', 'c_variable_name': 'g_pid_var[ROLL].pidterm[2]'},
+            {'name': 'roll ref', 'format': 'f', 'c_variable_name': 'g_pid_var[ROLL].ref'},
+            {'name': 'roll svpwm', 'format': 'f', 'c_variable_name': 'drv_var[ROLL].svpwm_angle'},
+            {'name': 'sbgc count', 'format': 'H', 'c_variable_name': 'g_sbgc_var.cycle_time'},
+            {'name': 'sbgc euler 1', 'format': 'f', 'c_variable_name': 'g_sbgc_var.euler[0]'},
+            {'name': 'sbgc euler 2', 'format': 'f', 'c_variable_name': 'g_sbgc_var.euler[1]'},
+            {'name': 'sbgc euler 3', 'format': 'f', 'c_variable_name': 'g_sbgc_var.euler[2]'},
+            {'name': 'encoder', 'format': 'H', 'c_variable_name': 'g_sbgc_var.encoder'},
         ]
         self.flash_structure = [
             {'name': 'dcm_type', 'format': 'B'},
             {'name': 'motor_on', 'format': 'B'},
-            {'name': 'reserved 2', 'format': 'B'},
-            {'name': 'reserved 3', 'format': 'B'},
+            {'name': 'pitch reverse', 'format': 'B'},
+            {'name': 'roll reverse', 'format': 'B'},
             {'name': 'reserved 4', 'format': 'B'},
             {'name': 'reserved 5', 'format': 'B'},
             {'name': 'reserved 6', 'format': 'B'},
@@ -159,6 +191,8 @@ class GimbalUartParser(CsvWriter):
             {'command': 'control', 'key': 0xa7, 'function': self.f_change_param},
             {'command': 'offset_p', 'key': 0xa8, 'function': self.f_change_param},
             {'command': 'offset_r', 'key': 0xa9, 'function': self.f_change_param},
+            {'command': 'pitch dir', 'key': 0xaa, 'function': self.f_change_param},
+            {'command': 'roll dir', 'key': 0xab, 'function': self.f_change_param},
             {'command': 'dcm_type', 'key': 0xb0, 'function': self.f_change_param},
             {'command': 'd11', 'key': 0xb1, 'function': self.f_change_param},
             {'command': 'd12', 'key': 0xb2, 'function': self.f_change_param},
@@ -174,6 +208,7 @@ class GimbalUartParser(CsvWriter):
             {'command': 'dcmY', 'key': 0xbc, 'function': self.f_change_param},
             {'command': 'step pitch', 'key': 0xe0, 'function': self.f_change_param},
             {'command': 'step roll', 'key': 0xe1, 'function': self.f_change_param},
+            {'command': 'sine pitch', 'key': 0xe2, 'function': self.f_change_param},
         ]
         super().__init__()
 
@@ -273,14 +308,6 @@ class GimbalUartParser(CsvWriter):
         while 1:
             msg = input("command: ")
 
-            # Use regular expression to split the string into numbers and characters
-            # output = re.findall(r'\d', msg)
-            # split = []
-            # if len(output) > 0:
-            #     pattern = r'(\D+)\s+(-?\d*\.?\d+)'
-            #     split = re.findall(pattern, msg)[0]
-            # else:
-            #     split.append(msg)
 
             split = self.parse_input_command(msg)
 
@@ -296,38 +323,6 @@ class GimbalUartParser(CsvWriter):
                         function(field['key'], data)
                     else:
                         function()
-
-
-            # try:
-            #     data = bytearray(struct.pack('<f', val))
-            #     val = float(msg[1:])
-            #     if msg[0] == 'p':
-            #         data.insert(0, 1)
-            #     elif msg[0] == 'i':
-            #         data.insert(0, 2)
-            #     elif msg[0] == 'd':
-            #         data.insert(0, 3)
-            #     else:
-            #         return
-            #     data.insert(0, 0xfe)
-            #     data.insert(6, 0xff)
-            #     self.ser.write(data)
-            #
-            # except: #because converting to float fails
-            #     if msg[0] == 'e':
-            #         self.send_uart_sine_sweep()
-            #     elif msg[0] == 's':
-            #         self.send_uart_step_input()
-            #     elif msg[0] == 'f':
-            #
-            #         data = bytearray(struct.pack('<f', 0))
-            #         data.insert(0, 0xf)
-            #         data.insert(0, 0xfe)
-            #         data.insert(6, 0xff)
-            #         self.ser.write(data)
-            #         print("read flash")
-            #     pass
-
         pass
 
     def read_serial_data(self):
@@ -434,9 +429,16 @@ class GimbalUI(GimbalUartParser):
             'offset_p', 'offset_r', 'command'
         ]
         self.rt_data_keys = [
-            'time', 'pitch', 'roll', 'cam acc x', 'cam acc y', 'cam acc z',
-            'pitch error', 'pitch p', 'pitch i', 'pitch d', 'pitch svpwm']
-        self.sbgc_data_keys = ['sbgc count', 'sbgc euler 1', 'sbgc euler 2', 'sbgc euler 3']
+            'time', 'cam imu ready', 'cam bias error', 'beta', 'kf gy bias x', 'kf gy bias y', 'kf gy bias z',
+            'kf bias Px', 'kf bias Py', 'kf bias Pz',
+            'pitch', 'roll', 'cam rate x', 'cam rate y', 'cam rate z', 'cam acc x', 'cam acc y', 'cam acc z',
+            'pitch svpwm']
+        self.sbgc_data_keys = ['sbgc count', 'sbgc euler 1', 'sbgc euler 2', 'sbgc euler 3', 'encoder']
+        self.rt_data2_keys = [
+            'b imu ready', 'b bias error', 'b pitch', 'b roll', 'b beta',
+            'b kf gy bias x', 'b kf gy bias y', 'b kf gy bias z',
+            'b kf bias Px', 'b kf bias Py', 'b kf bias Pz'
+        ]
         self.ui_command = ""
 
     def param_loop(self, win):
@@ -452,9 +454,20 @@ class GimbalUI(GimbalUartParser):
             win.addstr(y_pos, 0, "{:10}: {:.2f}".format(key, value))
             y_pos += 1
 
+        #Control mode
         msg = self.motor_mode_parse(win)
         win.addstr(y_pos, 0, "control   : " + msg)
         y_pos += 1
+
+        #Polarity
+        msg = self.polarity_read(win, 'pitch reverse')
+        win.addstr(y_pos, 0, "pitch dir : " + msg)
+        y_pos += 1
+        msg = self.polarity_read(win, 'roll reverse')
+        win.addstr(y_pos, 0, "roll dir  : " + msg)
+        y_pos += 1
+
+
         self.dcm_mode_parse(win, y_pos)
         win.refresh()
         pass
@@ -483,7 +496,15 @@ class GimbalUI(GimbalUartParser):
                 y_pos += 1
 
 
-
+    def polarity_read(self, win, key):
+        val = self.flash_data.get(key, 'N/A')
+        if val == 1:
+            msg = "reverse(1)"
+        elif val == 0:
+            msg = "nominal(0)"
+        else:
+            msg = "ERR"
+        return msg
         pass
 
     def motor_mode_parse(self, win):
@@ -501,13 +522,17 @@ class GimbalUI(GimbalUartParser):
             msg = "ERR"
         return msg
 
-
-
     def unit_change(self, key, value):
         if key == 'pitch':
             return value*180/pi
         elif key == 'roll':
             return value*180/pi
+        elif key == 'b pitch':
+            return value*180/pi
+        elif key == 'b roll':
+            return value*180/pi
+        # elif key == 'b beta':
+        #     return value*1000
         else:
             return value
 
@@ -517,13 +542,31 @@ class GimbalUI(GimbalUartParser):
         y_pos = 0
         for key in self.rt_data_keys:
             value = self.ui_data.get(key, 'N/A')
-            if not isinstance(value, float):
-                win.addstr(y_pos, 0, "!!!!Wrong key: {}".format(key))
+            if not isinstance(value, (float, int)):
+                win.addstr(y_pos, 0, "!!Wrong key: {}".format(key))
+                y_pos += 1
                 continue
             value = self.unit_change(key, value)
             win.addstr(y_pos, 0, "{:12}: {:.3f}".format(key, value))
             y_pos += 1
         win.refresh()
+        pass
+
+    def rt_data2_loop(self, win):
+        win.clear()
+        # self.ui_data['time']
+        y_pos = 0
+        for key in self.rt_data2_keys:
+            value = self.ui_data.get(key, 'N/A')
+            if not isinstance(value, (float, int)):
+                win.addstr(y_pos, 0, "!!!!Wrong key: {}".format(key))
+                y_pos += 1
+                continue
+            value = self.unit_change(key, value)
+            win.addstr(y_pos, 0, "{:12}: {:.3f}".format(key, value))
+            y_pos += 1
+        win.refresh()
+
         pass
 
     def sbgc_data_loop(self, win):
@@ -558,18 +601,6 @@ class GimbalUI(GimbalUartParser):
             pass
 
     def command_parse_and_send(self):
-        # Use regular expression to split the string into numbers and characters
-        # pattern = r'(\d+\.\d+|\D+)'
-        # split = re.findall(pattern, self.ui_command)
-
-        # output = re.findall(r'\d', self.ui_command)
-        # split = []
-        # if len(output) > 0: #case for number
-        #     pattern = r'(\D+)\s+(-?\d*\.?\d+)'
-        #     split = re.findall(pattern, self.ui_command)[0]
-        # else: # case for only string
-        #     split.append(self.ui_command)
-
         split = self.parse_input_command(self.ui_command)
 
         for field in self.command_list:
@@ -593,8 +624,9 @@ class GimbalUI(GimbalUartParser):
     def ui_loop(self, stdscr):
         param_win = curses.newwin(24, 30, 1, 1)
         rt_data_win = curses.newwin(24, 25, 1, 31)
+        rt_data2_win = curses.newwin(24, 25, 1, 60)
         command_win = curses.newwin(2, 80, 25, 1)
-        sbgc_win = curses.newwin(10, 25, 1, 60)
+        sbgc_win = curses.newwin(10, 25, 1, 91)
         try:
             while True:
                 # self.ui_data = self.parse_bytearray(data_ui_queue.get_nowait())
@@ -602,6 +634,7 @@ class GimbalUI(GimbalUartParser):
                 if data[1] == 0: #0 for real time log
                     self.ui_data = self.parse_bytearray(data)
                     self.rt_data_loop(rt_data_win)
+                    self.rt_data2_loop(rt_data2_win)
                     self.sbgc_data_loop(sbgc_win)
                 if data[1] == 1: #1 for real time log
                     self.flash_data = self.parse_flash_bytearray(data)
