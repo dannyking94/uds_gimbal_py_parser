@@ -31,9 +31,9 @@ class CsvWriter:
             {'name': 'kf gy bias x', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_gy_bias[0]'},
             {'name': 'kf gy bias y', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_gy_bias[1]'},
             {'name': 'kf gy bias z', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_gy_bias[2]'},
-            {'name': 'kf bias Px', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[0]'},
-            {'name': 'kf bias Py', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[1]'},
-            {'name': 'kf bias Pz', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[2]'},
+            {'name': 'kf bias px', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[0]'},
+            {'name': 'kf bias py', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[1]'},
+            {'name': 'kf bias pz', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[2]'},
             {'name': 'pitch', 'format': 'f', 'c_variable_name': 'g_imu.camera.euler[0]'},
             {'name': 'roll', 'format': 'f', 'c_variable_name': 'g_imu.camera.euler[1]'},
             {'name': 'cam rate x', 'format': 'f', 'c_variable_name': 'g_imu.camera.gy[0]'},
@@ -60,9 +60,9 @@ class CsvWriter:
             {'name': 'b kf gy bias x', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_gy_bias[0]'},
             {'name': 'b kf gy bias y', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_gy_bias[1]'},
             {'name': 'b kf gy bias z', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_gy_bias[2]'},
-            {'name': 'b kf bias Px', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[0]'},
-            {'name': 'b kf bias Py', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[1]'},
-            {'name': 'b kf bias Pz', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[2]'},
+            {'name': 'b kf bias px', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[0]'},
+            {'name': 'b kf bias py', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[1]'},
+            {'name': 'b kf bias pz', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[2]'},
             {'name': 'pitch error', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].error'},
             {'name': 'pitch p', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].pidterm[0]'},
             {'name': 'pitch i', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].pidterm[1]'},
@@ -430,14 +430,14 @@ class GimbalUI(GimbalUartParser):
         ]
         self.rt_data_keys = [
             'time', 'cam imu ready', 'cam bias error', 'beta', 'kf gy bias x', 'kf gy bias y', 'kf gy bias z',
-            'kf bias Px', 'kf bias Py', 'kf bias Pz',
+            'kf bias px', 'kf bias py', 'kf bias pz',
             'pitch', 'roll', 'cam rate x', 'cam rate y', 'cam rate z', 'cam acc x', 'cam acc y', 'cam acc z',
             'pitch svpwm']
         self.sbgc_data_keys = ['sbgc count', 'sbgc euler 1', 'sbgc euler 2', 'sbgc euler 3', 'encoder']
         self.rt_data2_keys = [
             'b imu ready', 'b bias error', 'b pitch', 'b roll', 'b beta',
             'b kf gy bias x', 'b kf gy bias y', 'b kf gy bias z',
-            'b kf bias Px', 'b kf bias Py', 'b kf bias Pz'
+            'b kf bias px', 'b kf bias py', 'b kf bias pz'
         ]
         self.ui_command = ""
 

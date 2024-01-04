@@ -7,9 +7,9 @@ float32 beta
 float32 kf_gy_bias_x
 float32 kf_gy_bias_y
 float32 kf_gy_bias_z
-float32 kf_bias_Px
-float32 kf_bias_Py
-float32 kf_bias_Pz
+float32 kf_bias_px
+float32 kf_bias_py
+float32 kf_bias_pz
 float32 pitch
 float32 roll
 float32 cam_rate_x
@@ -36,9 +36,9 @@ float32 b_gy_bias_z
 float32 b_kf_gy_bias_x
 float32 b_kf_gy_bias_y
 float32 b_kf_gy_bias_z
-float32 b_kf_bias_Px
-float32 b_kf_bias_Py
-float32 b_kf_bias_Pz
+float32 b_kf_bias_px
+float32 b_kf_bias_py
+float32 b_kf_bias_pz
 float32 pitch_error
 float32 pitch_p
 float32 pitch_i
