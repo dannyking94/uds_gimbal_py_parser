@@ -432,7 +432,7 @@ class GimbalUI(GimbalUartParser):
             'time', 'cam imu ready', 'cam bias error', 'beta', 'kf gy bias x', 'kf gy bias y', 'kf gy bias z',
             'kf bias px', 'kf bias py', 'kf bias pz',
             'pitch', 'roll', 'cam rate x', 'cam rate y', 'cam rate z', 'cam acc x', 'cam acc y', 'cam acc z',
-            'pitch svpwm']
+            'pitch svpwm', 'pitch ref']
         self.sbgc_data_keys = ['sbgc count', 'sbgc euler 1', 'sbgc euler 2', 'sbgc euler 3', 'encoder']
         self.rt_data2_keys = [
             'b imu ready', 'b bias error', 'b pitch', 'b roll', 'b beta',

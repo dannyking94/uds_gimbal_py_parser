@@ -94,12 +94,14 @@ class GimbalStatusFormatter:
         ros_type_map = {'B': 'uint8', 'H': 'uint16', 'f': 'float32', 'd': 'float64'}
 
         with open(file_path, 'w') as file:
+            file.write(f'EulerAngles gimbal_angle\n')
             for item in self.data_structure:
                 c_variable_name = item['c_variable_name']
                 ros_data_type = ros_type_map.get(item['format'])
                 ros_data_name = item['name'].replace(' ', '_')
                 string = f'{ros_data_type} {ros_data_name}\n'
                 file.write(string)
+
 
 
 

@@ -1,3 +1,4 @@
+EulerAngles gimbal_angle
 uint8 message_type
 float32 time
 uint8 cam_imu_ready
