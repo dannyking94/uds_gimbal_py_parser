@@ -22,72 +22,72 @@ class CsvWriter:
     def __init__(self):
         DATA_SIZE = 5
         self.data_structure = [
-            {'name': 'message type', 'format': 'B', 'c_variable_name': 'g_log.message_type'},
-            {'name': 'time', 'format': 'f', 'c_variable_name': 'g_log_time'},
-            {'name': 'cam imu ready', 'format': 'B', 'c_variable_name': 'g_imu.camera.gyro_ready'},
-            {'name': 'cam bias error', 'format': 'f', 'c_variable_name': 'g_imu.camera.gyro_bias_error'},
-            {'name': 'cam imu err', 'format': 'f', 'c_variable_name': 'g_imu.camera.fusion_error'},
-            {'name': 'beta', 'format': 'f', 'c_variable_name': 'g_imu.camera.madgwick_beta'},
-            {'name': 'kf gy bias x', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_gy_bias[0]'},
-            {'name': 'kf gy bias y', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_gy_bias[1]'},
-            {'name': 'kf gy bias z', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_gy_bias[2]'},
-            {'name': 'kf bias px', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[0]'},
-            {'name': 'kf bias py', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[1]'},
-            {'name': 'kf bias pz', 'format': 'f', 'c_variable_name': 'g_imu.camera.kf_bias_P[2]'},
-            {'name': 'pitch', 'format': 'f', 'c_variable_name': 'g_imu.camera.euler[0]'},
-            {'name': 'roll', 'format': 'f', 'c_variable_name': 'g_imu.camera.euler[1]'},
-            {'name': 'cam rate x', 'format': 'f', 'c_variable_name': 'g_imu.camera.gy[0]'},
-            {'name': 'cam rate y', 'format': 'f', 'c_variable_name': 'g_imu.camera.gy[1]'},
-            {'name': 'cam rate z', 'format': 'f', 'c_variable_name': 'g_imu.camera.gy[2]'},
-            {'name': 'cam acc x', 'format': 'f', 'c_variable_name': 'g_imu.camera.acc[0]'},
-            {'name': 'cam acc y', 'format': 'f', 'c_variable_name': 'g_imu.camera.acc[1]'},
-            {'name': 'cam acc z', 'format': 'f', 'c_variable_name': 'g_imu.camera.acc[2]'},
-            {'name': 'b imu ready', 'format': 'B', 'c_variable_name': 'g_imu.board.gyro_ready'},
-            {'name': 'b bias error', 'format': 'f', 'c_variable_name': 'g_imu.board.gyro_bias_error'},
-            {'name': 'b imu err', 'format': 'f', 'c_variable_name': 'g_imu.board.fusion_error'},
-            {'name': 'b pitch', 'format': 'f', 'c_variable_name': 'g_imu.board.euler[0]'},
-            {'name': 'b roll', 'format': 'f', 'c_variable_name': 'g_imu.board.euler[1]'},
-            {'name': 'b acc x', 'format': 'f', 'c_variable_name': 'g_imu.board.acc[0]'},
-            {'name': 'b acc y', 'format': 'f', 'c_variable_name': 'g_imu.board.acc[1]'},
-            {'name': 'b acc z', 'format': 'f', 'c_variable_name': 'g_imu.board.acc[2]'},
-            {'name': 'b rate x', 'format': 'f', 'c_variable_name': 'g_imu.board.gy[0]'},
-            {'name': 'b rate y', 'format': 'f', 'c_variable_name': 'g_imu.board.gy[1]'},
-            {'name': 'b rate z', 'format': 'f', 'c_variable_name': 'g_imu.board.gy[2]'},
-            {'name': 'b beta', 'format': 'f', 'c_variable_name': 'g_imu.board.madgwick_beta'},
-            {'name': 'b gy bias x', 'format': 'f', 'c_variable_name': 'g_gy_bias_var[3].bias'},
-            {'name': 'b gy bias y', 'format': 'f', 'c_variable_name': 'g_gy_bias_var[4].bias'},
-            {'name': 'b gy bias z', 'format': 'f', 'c_variable_name': 'g_gy_bias_var[5].bias'},
-            {'name': 'b kf gy bias x', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_gy_bias[0]'},
-            {'name': 'b kf gy bias y', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_gy_bias[1]'},
-            {'name': 'b kf gy bias z', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_gy_bias[2]'},
-            {'name': 'b kf bias px', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[0]'},
-            {'name': 'b kf bias py', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[1]'},
-            {'name': 'b kf bias pz', 'format': 'f', 'c_variable_name': 'g_imu.board.kf_bias_P[2]'},
-            {'name': 'pitch error', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].error'},
-            {'name': 'pitch p', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].pidterm[0]'},
-            {'name': 'pitch i', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].pidterm[1]'},
-            {'name': 'pitch d', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].pidterm[2]'},
-            {'name': 'pitch ref', 'format': 'f', 'c_variable_name': 'g_pid_var[PITCH].ref'},
-            {'name': 'pitch svpwm', 'format': 'd', 'c_variable_name': 'drv_var[PITCH].svpwm_angle'},
-            {'name': 'roll error', 'format': 'f', 'c_variable_name': 'g_pid_var[ROLL].error'},
-            {'name': 'roll p', 'format': 'f', 'c_variable_name': 'g_pid_var[ROLL].pidterm[0]'},
-            {'name': 'roll i', 'format': 'f', 'c_variable_name': 'g_pid_var[ROLL].pidterm[1]'},
-            {'name': 'roll d', 'format': 'f', 'c_variable_name': 'g_pid_var[ROLL].pidterm[2]'},
-            {'name': 'roll ref', 'format': 'f', 'c_variable_name': 'g_pid_var[ROLL].ref'},
-            {'name': 'roll svpwm', 'format': 'f', 'c_variable_name': 'drv_var[ROLL].svpwm_angle'},
-            {'name': 'sbgc count', 'format': 'H', 'c_variable_name': 'g_sbgc_var.cycle_time'},
-            {'name': 'sbgc euler 1', 'format': 'f', 'c_variable_name': 'g_sbgc_var.euler[0]'},
-            {'name': 'sbgc euler 2', 'format': 'f', 'c_variable_name': 'g_sbgc_var.euler[1]'},
-            {'name': 'sbgc euler 3', 'format': 'f', 'c_variable_name': 'g_sbgc_var.euler[2]'},
-            {'name': 'encoder', 'format': 'H', 'c_variable_name': 'g_sbgc_var.encoder'},
+            {'name': 'message type', 'format': 'B', 'c_var_name': 'g_log.message_type'},
+            {'name': 'time', 'format': 'f', 'c_var_name': 'g_log_time'},
+            {'name': 'cam imu ready', 'format': 'B', 'c_var_name': 'g_imu.camera.gyro_ready'},
+            {'name': 'cam bias error', 'format': 'f', 'c_var_name': 'g_imu.camera.gyro_bias_error'},
+            {'name': 'cam imu err', 'format': 'f', 'c_var_name': 'g_imu.camera.fusion_error'},
+            {'name': 'beta', 'format': 'f', 'c_var_name': 'g_imu.camera.madgwick_beta'},
+            {'name': 'kf gy bias x', 'format': 'f', 'c_var_name': 'g_imu.camera.kf_gy_bias[0]'},
+            {'name': 'kf gy bias y', 'format': 'f', 'c_var_name': 'g_imu.camera.kf_gy_bias[1]'},
+            {'name': 'kf gy bias z', 'format': 'f', 'c_var_name': 'g_imu.camera.kf_gy_bias[2]'},
+            {'name': 'kf bias px', 'format': 'f', 'c_var_name': 'g_imu.camera.kf_bias_P[0]'},
+            {'name': 'kf bias py', 'format': 'f', 'c_var_name': 'g_imu.camera.kf_bias_P[1]'},
+            {'name': 'kf bias pz', 'format': 'f', 'c_var_name': 'g_imu.camera.kf_bias_P[2]'},
+            {'name': 'pitch', 'format': 'f', 'c_var_name': 'g_imu.camera.euler[0]'},
+            {'name': 'roll', 'format': 'f', 'c_var_name': 'g_imu.camera.euler[1]'},
+            {'name': 'cam rate x', 'format': 'f', 'c_var_name': 'g_imu.camera.gy[0]'},
+            {'name': 'cam rate y', 'format': 'f', 'c_var_name': 'g_imu.camera.gy[1]'},
+            {'name': 'cam rate z', 'format': 'f', 'c_var_name': 'g_imu.camera.gy[2]'},
+            {'name': 'cam acc x', 'format': 'f', 'c_var_name': 'g_imu.camera.acc[0]'},
+            {'name': 'cam acc y', 'format': 'f', 'c_var_name': 'g_imu.camera.acc[1]'},
+            {'name': 'cam acc z', 'format': 'f', 'c_var_name': 'g_imu.camera.acc[2]'},
+            {'name': 'b imu ready', 'format': 'B', 'c_var_name': 'g_imu.board.gyro_ready'},
+            {'name': 'b bias error', 'format': 'f', 'c_var_name': 'g_imu.board.gyro_bias_error'},
+            {'name': 'b imu err', 'format': 'f', 'c_var_name': 'g_imu.board.fusion_error'},
+            {'name': 'b pitch', 'format': 'f', 'c_var_name': 'g_imu.board.euler[0]'},
+            {'name': 'b roll', 'format': 'f', 'c_var_name': 'g_imu.board.euler[1]'},
+            {'name': 'b acc x', 'format': 'f', 'c_var_name': 'g_imu.board.acc[0]'},
+            {'name': 'b acc y', 'format': 'f', 'c_var_name': 'g_imu.board.acc[1]'},
+            {'name': 'b acc z', 'format': 'f', 'c_var_name': 'g_imu.board.acc[2]'},
+            {'name': 'b rate x', 'format': 'f', 'c_var_name': 'g_imu.board.gy[0]'},
+            {'name': 'b rate y', 'format': 'f', 'c_var_name': 'g_imu.board.gy[1]'},
+            {'name': 'b rate z', 'format': 'f', 'c_var_name': 'g_imu.board.gy[2]'},
+            {'name': 'b beta', 'format': 'f', 'c_var_name': 'g_imu.board.madgwick_beta'},
+            {'name': 'b gy bias x', 'format': 'f', 'c_var_name': 'g_gy_bias_var[3].bias'},
+            {'name': 'b gy bias y', 'format': 'f', 'c_var_name': 'g_gy_bias_var[4].bias'},
+            {'name': 'b gy bias z', 'format': 'f', 'c_var_name': 'g_gy_bias_var[5].bias'},
+            {'name': 'b kf gy bias x', 'format': 'f', 'c_var_name': 'g_imu.board.kf_gy_bias[0]'},
+            {'name': 'b kf gy bias y', 'format': 'f', 'c_var_name': 'g_imu.board.kf_gy_bias[1]'},
+            {'name': 'b kf gy bias z', 'format': 'f', 'c_var_name': 'g_imu.board.kf_gy_bias[2]'},
+            {'name': 'b kf bias px', 'format': 'f', 'c_var_name': 'g_imu.board.kf_bias_P[0]'},
+            {'name': 'b kf bias py', 'format': 'f', 'c_var_name': 'g_imu.board.kf_bias_P[1]'},
+            {'name': 'b kf bias pz', 'format': 'f', 'c_var_name': 'g_imu.board.kf_bias_P[2]'},
+            {'name': 'pitch error', 'format': 'f', 'c_var_name': 'g_pid_var[PITCH].error'},
+            {'name': 'pitch p', 'format': 'f', 'c_var_name': 'g_pid_var[PITCH].pidterm[0]'},
+            {'name': 'pitch i', 'format': 'f', 'c_var_name': 'g_pid_var[PITCH].pidterm[1]'},
+            {'name': 'pitch d', 'format': 'f', 'c_var_name': 'g_pid_var[PITCH].pidterm[2]'},
+            {'name': 'pitch ref', 'format': 'f', 'c_var_name': 'g_pid_var[PITCH].ref'},
+            {'name': 'pitch svpwm', 'format': 'd', 'c_var_name': 'drv_var[PITCH].svpwm_angle'},
+            {'name': 'roll error', 'format': 'f', 'c_var_name': 'g_pid_var[ROLL].error'},
+            {'name': 'roll p', 'format': 'f', 'c_var_name': 'g_pid_var[ROLL].pidterm[0]'},
+            {'name': 'roll i', 'format': 'f', 'c_var_name': 'g_pid_var[ROLL].pidterm[1]'},
+            {'name': 'roll d', 'format': 'f', 'c_var_name': 'g_pid_var[ROLL].pidterm[2]'},
+            {'name': 'roll ref', 'format': 'f', 'c_var_name': 'g_pid_var[ROLL].ref'},
+            {'name': 'roll svpwm', 'format': 'f', 'c_var_name': 'drv_var[ROLL].svpwm_angle'},
+            {'name': 'sbgc count', 'format': 'H', 'c_var_name': 'g_sbgc_var.cycle_time'},
+            {'name': 'sbgc euler 1', 'format': 'f', 'c_var_name': 'g_sbgc_var.euler[0]'},
+            {'name': 'sbgc euler 2', 'format': 'f', 'c_var_name': 'g_sbgc_var.euler[1]'},
+            {'name': 'sbgc euler 3', 'format': 'f', 'c_var_name': 'g_sbgc_var.euler[2]'},
+            {'name': 'encoder', 'format': 'H', 'c_var_name': 'g_sbgc_var.encoder'},
         ]
         self.flash_structure = [
             {'name': 'dcm_type', 'format': 'B'},
             {'name': 'motor_on', 'format': 'B'},
             {'name': 'pitch reverse', 'format': 'B'},
             {'name': 'roll reverse', 'format': 'B'},
-            {'name': 'reserved 4', 'format': 'B'},
-            {'name': 'reserved 5', 'format': 'B'},
+            {'name': 'fusion lv', 'format': 'B'},
+            {'name': 'bias method', 'format': 'B'},
             {'name': 'reserved 6', 'format': 'B'},
             {'name': 'reserved 7', 'format': 'B'},
             {'name': 'dcmP', 'format': 'f'},
@@ -111,6 +111,9 @@ class CsvWriter:
             {'name': 'offset_p', 'format': 'f'},
             {'name': 'offset_r', 'format': 'f'},
             {'name': 'command', 'format': 'f'},
+            {'name': 'bias x', 'format': 'f'},
+            {'name': 'bias y', 'format': 'f'},
+            {'name': 'bias z', 'format': 'f'},
         ]
         pass
 
@@ -193,6 +196,12 @@ class GimbalUartParser(CsvWriter):
             {'command': 'offset_r', 'key': 0xa9, 'function': self.f_change_param},
             {'command': 'pitch dir', 'key': 0xaa, 'function': self.f_change_param},
             {'command': 'roll dir', 'key': 0xab, 'function': self.f_change_param},
+            {'command': 'bias write', 'key': 0xac, 'function': self.f_change_param},
+            {'command': 'bias method', 'key': 0xad, 'function': self.f_change_param},
+            {'command': 'bias x', 'key': 0xc0, 'function': self.f_change_param},
+            {'command': 'bias y', 'key': 0xc1, 'function': self.f_change_param},
+            {'command': 'bias z', 'key': 0xc2, 'function': self.f_change_param},
+            {'command': 'fusion lv', 'key': 0xae, 'function': self.f_change_param},
             {'command': 'dcm_type', 'key': 0xb0, 'function': self.f_change_param},
             {'command': 'd11', 'key': 0xb1, 'function': self.f_change_param},
             {'command': 'd12', 'key': 0xb2, 'function': self.f_change_param},
@@ -307,7 +316,6 @@ class GimbalUartParser(CsvWriter):
     def wait_for_input_send_uart(self):
         while 1:
             msg = input("command: ")
-
 
             split = self.parse_input_command(msg)
 
@@ -426,10 +434,11 @@ class GimbalUI(GimbalUartParser):
         #keys below for display only
         self.flash_data_keys = [
             'pitch Kp', 'pitch Ki', 'pitch Kd', 'roll Kp', 'roll Ki', 'roll Kd',
-            'offset_p', 'offset_r', 'command'
-        ]
+            'offset_p', 'offset_r', 'command', 'fusion lv', 'bias method',
+            'bias x', 'bias y', 'bias z'
+        ] #only float type works here
         self.rt_data_keys = [
-            'time', 'cam imu ready', 'cam bias error', 'beta', 'kf gy bias x', 'kf gy bias y', 'kf gy bias z',
+            'time', 'cam imu ready', 'cam bias error', 'cam imu err', 'kf gy bias x', 'kf gy bias y', 'kf gy bias z',
             'kf bias px', 'kf bias py', 'kf bias pz',
             'pitch', 'roll', 'cam rate x', 'cam rate y', 'cam rate z', 'cam acc x', 'cam acc y', 'cam acc z',
             'pitch svpwm', 'pitch ref']
@@ -448,11 +457,15 @@ class GimbalUI(GimbalUartParser):
         for key in self.flash_data_keys:
             value = self.flash_data.get(key, 'N/A')
             if not isinstance(value, float):
-                win.addstr(y_pos, 0, "!!Wrong key: {}".format(key))
+                win.addstr(y_pos, 0, "{:10}: {}".format(key, value))
+                # win.addstr(y_pos, 0, "!!Wrong key: {}".format(key))
                 y_pos += 1
                 continue
             win.addstr(y_pos, 0, "{:10}: {:.2f}".format(key, value))
             y_pos += 1
+
+        #bias estimation
+
 
         #Control mode
         msg = self.motor_mode_parse(win)
@@ -467,10 +480,26 @@ class GimbalUI(GimbalUartParser):
         win.addstr(y_pos, 0, "roll dir  : " + msg)
         y_pos += 1
 
-
+        #dcm type
         self.dcm_mode_parse(win, y_pos)
         win.refresh()
         pass
+
+    def bias_fusion_param(self, win, y_pos):
+        key = 'fusion lv'
+        val = self.flash_data.get(key, 'N/A')
+        if val == 1:
+            msg = "PITCH(1)"
+        elif val == 2:
+            msg = "ROLL(2)"
+        elif motor_val == 3:
+            msg = "BOTH(3)"
+        elif motor_val == 0:
+            msg = "OFF(0)"
+        else:
+            msg = "ERR"
+        return msg
+
 
     def dcm_mode_parse(self, win, y_pos):
         key = 'dcm_type'
@@ -531,6 +560,8 @@ class GimbalUI(GimbalUartParser):
             return value*180/pi
         elif key == 'b roll':
             return value*180/pi
+        # elif key == 'cam imu err':
+        #     return value
         # elif key == 'b beta':
         #     return value*1000
         else:
@@ -622,10 +653,10 @@ class GimbalUI(GimbalUartParser):
 
 
     def ui_loop(self, stdscr):
-        param_win = curses.newwin(24, 30, 1, 1)
+        param_win = curses.newwin(27, 30, 1, 1)
         rt_data_win = curses.newwin(24, 25, 1, 31)
         rt_data2_win = curses.newwin(24, 25, 1, 60)
-        command_win = curses.newwin(2, 80, 25, 1)
+        command_win = curses.newwin(2, 80, 28, 1)
         sbgc_win = curses.newwin(10, 25, 1, 91)
         try:
             while True:
