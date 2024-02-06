@@ -50,7 +50,7 @@ class GimbalStatusFormatter:
             {'name': 'pitch p', 'format': 'f', 'c_var_name': 'g_pid_var[PITCH].pidterm[0]'},
             {'name': 'pitch i', 'format': 'f', 'c_var_name': 'g_pid_var[PITCH].pidterm[1]'},
             {'name': 'pitch d', 'format': 'f', 'c_var_name': 'g_pid_var[PITCH].pidterm[2]'},
-            {'name': 'pitch ref', 'format': 'f', 'c_var_name': 'g_pid_var[PITCH].ref'},
+            {'name': 'pitch ref', 'format': 'f', 'c_var_name': 'g_pitch_cmd'},
             {'name': 'pitch svpwm', 'format': 'd', 'c_var_name': 'drv_var[PITCH].svpwm_angle'},
             {'name': 'roll error', 'format': 'f', 'c_var_name': 'g_pid_var[ROLL].error'},
             {'name': 'roll p', 'format': 'f', 'c_var_name': 'g_pid_var[ROLL].pidterm[0]'},

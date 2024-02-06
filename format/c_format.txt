@@ -43,7 +43,7 @@ add_log_var(&g_pid_var[PITCH].error, sizeof(float));
 add_log_var(&g_pid_var[PITCH].pidterm[0], sizeof(float));
 add_log_var(&g_pid_var[PITCH].pidterm[1], sizeof(float));
 add_log_var(&g_pid_var[PITCH].pidterm[2], sizeof(float));
-add_log_var(&g_pid_var[PITCH].ref, sizeof(float));
+add_log_var(&g_pitch_cmd, sizeof(float));
 add_log_var(&drv_var[PITCH].svpwm_angle, sizeof(double));
 add_log_var(&g_pid_var[ROLL].error, sizeof(float));
 add_log_var(&g_pid_var[ROLL].pidterm[0], sizeof(float));

@@ -12,11 +12,9 @@ import curses
 from curses import wrapper
 import traceback
 from math import pi
-import re
 
 data_csv_queue = queue.Queue() #used for csv write
 data_ui_queue = queue.Queue()
-
 
 class CsvWriter:
     def __init__(self):
